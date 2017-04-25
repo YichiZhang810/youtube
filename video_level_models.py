@@ -63,47 +63,47 @@ class RegressorModel(models.BaseModel):
       model in the 'predictions' key. The dimensions of the tensor are
       batch_size x num_classes."""
 
-  vid_ids = []
-  labels = []
-  labels_for_MLP = []
-  mean_rgb = []
-  mean_audio = []
+    vid_ids = []
+    labels = []
+    labels_for_MLP = []
+    mean_rgb = []
+    mean_audio = []
 
-  i=0
-  label_mapping = pd.Series.from_csv('label_names.csv',header=0).to_dict()
-  n = len(label_mapping)
-  # print ("=====================")
-  # print (model_input)
-  # print ("=====================")
-  for example in tf.python_io.tf_record_iterator("train-0.tfrecord"):
-    tf_example = tf.train.Example.FromString(example) # get visualized TFRecord
-    vid_ids.append(tf_example.features.feature['video_id'].bytes_list.value[0].decode(encoding='UTF-8'))
+    i=0
+    label_mapping = pd.Series.from_csv('label_names.csv',header=0).to_dict()
+    n = len(label_mapping)
+    # print ("=====================")
+    # print (model_input)
+    # print ("=====================")
+    for example in tf.python_io.tf_record_iterator("train-0.tfrecord"):
+      tf_example = tf.train.Example.FromString(example) # get visualized TFRecord
+      vid_ids.append(tf_example.features.feature['video_id'].bytes_list.value[0].decode(encoding='UTF-8'))
 
-    array = np.zeros(n)
-    tmp_labels=tf_example.features.feature['labels'].int64_list.value
-    tmp_labels_after_pp = []
-    for x in tmp_labels:
-      if x<4716:
-        tmp_labels_after_pp.append(x)
-    labels.append(tmp_labels_after_pp)
-    array[tmp_labels]=1
-    labels_for_MLP.append(array)
+      array = np.zeros(n)
+      tmp_labels=tf_example.features.feature['labels'].int64_list.value
+      tmp_labels_after_pp = []
+      for x in tmp_labels:
+        if x<4716:
+          tmp_labels_after_pp.append(x)
+      labels.append(tmp_labels_after_pp)
+      array[tmp_labels]=1
+      labels_for_MLP.append(array)
 
-    mean_rgb.append(tf_example.features.feature['mean_rgb'].float_list.value)
-    mean_audio.append(tf_example.features.feature['mean_audio'].float_list.value)
+      mean_rgb.append(tf_example.features.feature['mean_rgb'].float_list.value)
+      mean_audio.append(tf_example.features.feature['mean_audio'].float_list.value)
 
-  # output = slim.fully_connected(
-  # model_input, vocab_size, activation_fn=tf.nn.sigmoid,
-  # weights_regularizer=slim.l2_regularizer(l2_penalty))
-  X = mean_audio #[[0., 0.], [1., 1.]]
-  y = labels_for_MLP #[[0, 1, 1], [1, 1, 0], [1, 0, 0]]
-  clf = MLPRegressor(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(15,),random_state=1)
-  clf.fit(X, y)
+    # output = slim.fully_connected(
+    # model_input, vocab_size, activation_fn=tf.nn.sigmoid,
+    # weights_regularizer=slim.l2_regularizer(l2_penalty))
+    X = mean_audio #[[0., 0.], [1., 1.]]
+    y = labels_for_MLP #[[0, 1, 1], [1, 1, 0], [1, 0, 0]]
+    clf = MLPRegressor(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(15,),random_state=1)
+    clf.fit(X, y)
 
-  result1 = clf.predict([mean_audio[8]])
-  result_tensor = tf.convert_to_tensor(result1)
+    result1 = clf.predict([mean_audio[8]])
+    result_tensor = tf.convert_to_tensor(result1)
 
-  return {"predictions": result_tensor}
+    return {"predictions": result_tensor}
 
 class MoeModel(models.BaseModel):
   """A softmax over a mixture of logistic models (with L2 regularization)."""
