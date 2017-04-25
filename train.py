@@ -249,6 +249,13 @@ def build_graph(reader,
           num_epochs=num_epochs))
   tf.summary.histogram("model/input_raw", model_input_raw)
 
+  print('---------')
+  print(type(model_input_raw))
+  print(model_input_raw)
+
+  print('---------')
+
+
   feature_dim = len(model_input_raw.get_shape()) - 1
 
   model_input = tf.nn.l2_normalize(model_input_raw, feature_dim)
@@ -634,11 +641,6 @@ def main(unused_argv):
   # Load the task data from the environment.
   task_data = env.get("task", None) or {"type": "master", "index": 0}
   task = type("TaskSpec", (object,), task_data)
-
-  print('------------')
-  print(task_data)
-  print('------------')
-
 
   # Logging the version.
   logging.set_verbosity(tf.logging.INFO)
