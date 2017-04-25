@@ -76,7 +76,7 @@ class LogisticModel(models.BaseModel):
 # 	for example in tf.python_io.tf_record_iterator("train-0.tfrecord"):
 # 		tf_example = tf.train.Example.FromString(example) # get visualized TFRecord
 # 		vid_ids.append(tf_example.features.feature[’video_id’].bytes_list.value[0].decode(encoding=’UTF-8’))
-		
+
 # 		array = np.zeros(n)
 # 		tmp_labels=tf_example.features.feature[’labels’].int64_list.value
 # 		tmp_labels_after_pp = []
