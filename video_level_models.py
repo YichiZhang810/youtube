@@ -50,13 +50,13 @@ class LogisticModel(models.BaseModel):
         model_input, vocab_size, activation_fn=tf.nn.sigmoid,
         weights_regularizer=slim.l2_regularizer(l2_penalty))
 
-    # print ("=====================")
+    print ("=====================")
     # print (type(output))
-    # print(type(model_input))
-    # print(model_input)
+    print(type(model_input))
+    print(model_input)
     # sess = tf.InteractiveSession()
 
-    # print ("=====================")
+    print ("=====================")
 
     return {"predictions": output}
 
