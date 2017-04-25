@@ -73,7 +73,8 @@ class RegressorModel(models.BaseModel):
     mean_audio = []
 
     i=0
-    
+    label_mapping = pd.Series.from_csv('label_names.csv',header=0).to_dict()
+
     return {"predictions": output}
 
 class MoeModel(models.BaseModel):
