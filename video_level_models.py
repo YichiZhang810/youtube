@@ -53,7 +53,7 @@ class LogisticModel(models.BaseModel):
     print ("=====================")
     # print (type(output))
     print(type(model_input))
-    print(model_input)
+    print(model_input.eval())
     # sess = tf.InteractiveSession()
 
     print ("=====================")
