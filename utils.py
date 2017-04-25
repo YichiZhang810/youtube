@@ -158,7 +158,7 @@ def GetListOfFeatureNamesAndSizes(feature_names, feature_sizes):
                   str(len(list_of_feature_names)) + ") != length of feature "
                   "sizes (=" + str(len(list_of_feature_sizes)) + ")")
   print('----------')
-    print(list_of_feature_names)
+  print(list_of_feature_names)
   print('----------')
 
   return list_of_feature_names, list_of_feature_sizes
