@@ -51,14 +51,14 @@ class LogisticModel(models.BaseModel):
         weights_regularizer=slim.l2_regularizer(l2_penalty))
 
     print ("=====================")
-    # print (type(output))
+    # # print (type(output))
     # print(type(model_input))
-    # sess1 = tf.InteractiveSession()
-    # print(model_input.eval())
-    # sess = tf.InteractiveSession()
+    # # sess1 = tf.InteractiveSession()
+    print(model_input.eval())
+    # # sess = tf.InteractiveSession()
 
-    sess = tf.Session()
-    sess.run(model_input)
+    # sess = tf.Session()
+    # sess.run(model_input)
 
     print ("=====================")
 
