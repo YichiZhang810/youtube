@@ -24,6 +24,9 @@ import numpy as np
 from tensorflow import flags
 import tensorflow.contrib.slim as slim
 
+from sklearn.neural_network import MLPClassifier
+from sklearn.neural_network import MLPRegressor
+
 FLAGS = flags.FLAGS
 flags.DEFINE_integer(
     "moe_num_mixtures", 2,
