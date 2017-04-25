@@ -77,10 +77,10 @@ class RegressorModel(models.BaseModel):
   # print ("=====================")
   for example in tf.python_io.tf_record_iterator("train-0.tfrecord"):
     tf_example = tf.train.Example.FromString(example) # get visualized TFRecord
-    vid_ids.append(tf_example.features.feature[’video_id’].bytes_list.value[0].decode(encoding=’UTF-8’))
+    vid_ids.append(tf_example.features.feature['video_id'].bytes_list.value[0].decode(encoding='UTF-8'))
 
     array = np.zeros(n)
-    tmp_labels=tf_example.features.feature[’labels’].int64_list.value
+    tmp_labels=tf_example.features.feature['labels'].int64_list.value
     tmp_labels_after_pp = []
     for x in tmp_labels:
       if x<4716:
@@ -89,8 +89,8 @@ class RegressorModel(models.BaseModel):
     array[tmp_labels]=1
     labels_for_MLP.append(array)
 
-    mean_rgb.append(tf_example.features.feature[’mean_rgb’].float_list.value)
-    mean_audio.append(tf_example.features.feature[’mean_audio’].float_list.value)
+    mean_rgb.append(tf_example.features.feature['mean_rgb'].float_list.value)
+    mean_audio.append(tf_example.features.feature['mean_audio'].float_list.value)
 
   # output = slim.fully_connected(
   # model_input, vocab_size, activation_fn=tf.nn.sigmoid,
