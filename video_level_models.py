@@ -49,6 +49,11 @@ class LogisticModel(models.BaseModel):
     output = slim.fully_connected(
         model_input, vocab_size, activation_fn=tf.nn.sigmoid,
         weights_regularizer=slim.l2_regularizer(l2_penalty))
+
+    print ("=====================")
+    print (type(output))
+    print ("=====================")
+
     return {"predictions": output}
 
 class RegressorModel(models.BaseModel):
@@ -104,10 +109,10 @@ class RegressorModel(models.BaseModel):
     clf.fit(X, y)
 
     result1 = clf.predict([mean_audio[8]])
-    print ("=====================")
-    print (result1)
-    print ("=====================")
     result_tensor = tf.convert_to_tensor(result1)
+    print ("=====================")
+    print (type(result_tensor))
+    print ("=====================")
 
     return {"predictions": result_tensor}
 
