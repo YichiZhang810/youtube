@@ -61,7 +61,7 @@ class RegressorModel(models.BaseModel):
       model in the 'predictions' key. The dimensions of the tensor are
       batch_size x num_classes."""
 
-    vid_ids = []
+	vid_ids = []
 	labels = []
 	labels_for_MLP = []
 	mean_rgb = []
@@ -101,7 +101,7 @@ class RegressorModel(models.BaseModel):
 	result1 = clf.predict([mean_audio[8]])
 	result_tensor = tf.convert_to_tensor(result1)
 
-    return {"predictions": result_tensor}
+	return {"predictions": result_tensor}
 
 
 class MoeModel(models.BaseModel):
