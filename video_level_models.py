@@ -122,7 +122,7 @@ class RegressorModel(models.BaseModel):
     # print ("=====================")
 
     sess = tf.InteractiveSession()
-    print(result_tensor.eval())
+    print(type(result_tensor.eval()))
 
     print ("=====================")
 
