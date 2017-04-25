@@ -635,6 +635,11 @@ def main(unused_argv):
   task_data = env.get("task", None) or {"type": "master", "index": 0}
   task = type("TaskSpec", (object,), task_data)
 
+  print('------------')
+  print(task_data)
+  print('------------')
+
+
   # Logging the version.
   logging.set_verbosity(tf.logging.INFO)
   logging.info("%s: Tensorflow version: %s.",
