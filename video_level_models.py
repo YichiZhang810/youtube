@@ -50,18 +50,13 @@ class LogisticModel(models.BaseModel):
         model_input, vocab_size, activation_fn=tf.nn.sigmoid,
         weights_regularizer=slim.l2_regularizer(l2_penalty))
 
-    print ("=====================")
+    # print ("=====================")
     # print (type(output))
-    print(type(model_input))
-    print(model_input)
+    # print(type(model_input))
+    # print(model_input)
     # sess = tf.InteractiveSession()
 
-    print ("=====================")
-
-    print(type(vocab_size))
-    print(vocab_size)
-
-    print ("=====================")
+    # print ("=====================")
 
     return {"predictions": output}
 
@@ -121,14 +116,14 @@ class RegressorModel(models.BaseModel):
 
     result1 = clf.predict(audio_matrix)
     result_tensor = tf.convert_to_tensor(result1)
-    print ("=====================")
-    print (type(result_tensor))
+    # print ("=====================")
+    # print (type(result_tensor))
     # print ("=====================")
 
     # sess = tf.InteractiveSession()
     # print(type(result_tensor.eval()))
 
-    print ("=====================")
+    # print ("=====================")
 
     return {"predictions": result_tensor}
 
