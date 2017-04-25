@@ -97,7 +97,7 @@ class RegressorModel(models.BaseModel):
   # weights_regularizer=slim.l2_regularizer(l2_penalty))
   X = mean_audio #[[0., 0.], [1., 1.]]
   y = labels_for_MLP #[[0, 1, 1], [1, 1, 0], [1, 0, 0]]
-  clf = MLPRegressor(solver=’lbfgs’, alpha=1e-5, hidden_layer_sizes=(15,),random_state=1)
+  clf = MLPRegressor(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(15,),random_state=1)
   clf.fit(X, y)
 
   result1 = clf.predict([mean_audio[8]])
