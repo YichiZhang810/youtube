@@ -59,6 +59,7 @@ class LogisticModel(models.BaseModel):
     print ("=====================")
 
     print(type(vocab_size))
+    print(vocab_size)
 
     print ("=====================")
 
