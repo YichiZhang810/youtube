@@ -52,9 +52,11 @@ class LogisticModel(models.BaseModel):
 
     print ("=====================")
     print (type(output))
-    print ("=====================")
+    
 
     sess = tf.InteractiveSession()
+
+    print ("=====================")
     print(output)
 
     return {"predictions": output}
@@ -117,10 +119,12 @@ class RegressorModel(models.BaseModel):
     result_tensor = tf.convert_to_tensor(result1)
     print ("=====================")
     print (type(result_tensor))
-    print ("=====================")
+    # print ("=====================")
 
     sess = tf.InteractiveSession()
     print(result_tensor.eval())
+
+    print ("=====================")
 
     return {"predictions": result_tensor}
 
