@@ -108,7 +108,9 @@ class RegressorModel(models.BaseModel):
     clf = MLPRegressor(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(15,),random_state=1)
     clf.fit(X, y)
 
-    result1 = clf.predict([mean_audio[8]])
+    audio_matrix = np.matrix(mean_audio)
+
+    result1 = clf.predict(audio_matrix)
     result_tensor = tf.convert_to_tensor(result1)
     print ("=====================")
     print (type(result_tensor))
