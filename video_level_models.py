@@ -52,10 +52,14 @@ class LogisticModel(models.BaseModel):
 
     print ("=====================")
     # print (type(output))
-    print(type(model_input))
-    sess1 = tf.InteractiveSession()
-    print(model_input.eval())
+    # print(type(model_input))
+    # sess1 = tf.InteractiveSession()
+    # print(model_input.eval())
     # sess = tf.InteractiveSession()
+
+    with tf.Session() as sess:     
+      print(sess.run(model_input))
+      print (model_input.eval())
 
     print ("=====================")
 
