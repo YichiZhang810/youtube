@@ -54,8 +54,8 @@ class LogisticModel(models.BaseModel):
     print (type(output))
     print ("=====================")
 
-    sess = tf.InteractiveSession()
-    print(output.eval())
+    # sess = tf.InteractiveSession()
+    # print(output.eval())
 
     return {"predictions": output}
 
