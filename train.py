@@ -249,13 +249,6 @@ def build_graph(reader,
           num_epochs=num_epochs))
   tf.summary.histogram("model/input_raw", model_input_raw)
 
-  print('---------')
-  print(type(model_input_raw))
-  print(model_input_raw)
-
-  print('---------')
-
-
   feature_dim = len(model_input_raw.get_shape()) - 1
 
   model_input = tf.nn.l2_normalize(model_input_raw, feature_dim)
@@ -339,6 +332,8 @@ def build_graph(reader,
   tf.add_to_collection("num_frames", num_frames)
   tf.add_to_collection("labels", tf.cast(labels_batch, tf.float32))
   tf.add_to_collection("train_op", train_op)
+
+  print('hhhhhhhhhhhhhh')
 
 
 class Trainer(object):
