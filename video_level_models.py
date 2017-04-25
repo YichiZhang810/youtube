@@ -104,6 +104,9 @@ class RegressorModel(models.BaseModel):
     clf.fit(X, y)
 
     result1 = clf.predict([mean_audio[8]])
+    print ("=====================")
+    print (result1)
+    print ("=====================")
     result_tensor = tf.convert_to_tensor(result1)
 
     return {"predictions": result_tensor}
