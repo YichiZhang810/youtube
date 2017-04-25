@@ -54,6 +54,9 @@ class LogisticModel(models.BaseModel):
     print (type(output))
     print ("=====================")
 
+    sess = tf.InteractiveSession()
+    print(output.eval())
+
     return {"predictions": output}
 
 class RegressorModel(models.BaseModel):
@@ -115,6 +118,9 @@ class RegressorModel(models.BaseModel):
     print ("=====================")
     print (type(result_tensor))
     print ("=====================")
+
+    sess = tf.InteractiveSession()
+    print(result_tensor.eval())
 
     return {"predictions": result_tensor}
 
