@@ -69,13 +69,45 @@ class FrameLevelLogisticModel(models.BaseModel):
       model in the 'predictions' key. The dimensions of the tensor are
       'batch_size' x 'num_classes'.
     """
+
+    print('-----------')
+    print('num_frames')
+    print(type(num_frames))
+    print(num_frames)
+    print('-----------')
+
     num_frames = tf.cast(tf.expand_dims(num_frames, 1), tf.float32)
     feature_size = model_input.get_shape().as_list()[2]
 
+    print('-----------')
+    print('num_frames')
+    print(type(num_frames))
+    print(num_frames)
+    print('-----------')
+    print('-----------')
+    print('feature_size')
+    print(type(feature_size))
+    print(feature_size)
+    print('-----------')
+
+
     denominators = tf.reshape(
         tf.tile(num_frames, [1, feature_size]), [-1, feature_size])
+
+    print('-----------')
+    print('denominators')
+    print(type(denominators))
+    print(denominators)
+    print('-----------')
+
     avg_pooled = tf.reduce_sum(model_input,
                                axis=[1]) / denominators
+
+    print('-----------')
+    print('avg_pooled')
+    print(type(avg_pooled))
+    print(avg_pooled)
+    print('-----------')
 
     output = slim.fully_connected(
         avg_pooled, vocab_size, activation_fn=tf.nn.sigmoid,
