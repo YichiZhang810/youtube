@@ -95,13 +95,19 @@ class FrameLevelLogisticModel(models.BaseModel):
         tf.tile(num_frames, [1, feature_size]), [-1, feature_size])
 
     print('-----------')
-    print('denominators')
-    print(type(denominators))
-    print(denominators)
+    print('model_input')
+    print(type(model_input))
+    print(model_input)
     print('-----------')
 
-    avg_pooled = tf.reduce_sum(model_input,
-                               axis=[1]) / denominators
+
+    print('-----------')
+    print('tf.reduce_sum(model_input, axis=[1])')
+    print(type(tf.reduce_sum(model_input, axis=[1])))
+    print(tf.reduce_sum(model_input, axis=[1]))
+    print('-----------')
+
+    avg_pooled = tf.reduce_sum(model_input, axis=[1]) / denominators
 
     print('-----------')
     print('avg_pooled')
