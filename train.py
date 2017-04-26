@@ -44,9 +44,9 @@ if __name__ == "__main__":
       "features (i.e. tensorflow.SequenceExample), then set --reader_type "
       "format. The (Sequence)Examples are expected to have 'rgb' byte array "
       "sequence feature as well as a 'labels' int64 context feature.")
-  flags.DEFINE_string("feature_names", "mean_rgb,mean_audio", "Name of the feature "
+  flags.DEFINE_string("feature_names", "mean_rgb", "Name of the feature "
                       "to use for training.")
-  flags.DEFINE_string("feature_sizes", "1024,128", "Length of the feature vectors.")
+  flags.DEFINE_string("feature_sizes", "1024", "Length of the feature vectors.")
 
   # Model flags.
   flags.DEFINE_bool(
@@ -332,8 +332,6 @@ def build_graph(reader,
   tf.add_to_collection("num_frames", num_frames)
   tf.add_to_collection("labels", tf.cast(labels_batch, tf.float32))
   tf.add_to_collection("train_op", train_op)
-
-  print('hhhhhhhhhhhhhh')
 
 
 class Trainer(object):
