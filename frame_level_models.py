@@ -220,14 +220,8 @@ class LstmModel(models.BaseModel):
       'batch_size' x 'num_classes'.
     """
 
-    print('----------')
-    print('num_frames')
-    with tf.Session():
-      print(num_frames.eval())
-    print('----------')
-
-    lstm_size = FLAGS.lstm_cells
-    number_of_layers = FLAGS.lstm_layers
+    lstm_size = FLAGS.lstm_cells #1024
+    number_of_layers = FLAGS.lstm_layers #2
 
     stacked_lstm = tf.contrib.rnn.MultiRNNCell(
             [
@@ -236,11 +230,26 @@ class LstmModel(models.BaseModel):
                 for _ in range(number_of_layers)
                 ])
 
+    print('------------')
+    print('stacked_lstm')
+    print(stacked_lstm)
+    print('------------')
+
     loss = 0.0
 
     outputs, state = tf.nn.dynamic_rnn(stacked_lstm, model_input,
                                        sequence_length=num_frames,
                                        dtype=tf.float32)
+
+    print('------------')
+    print('outputs')
+    print(outputs)
+    print('------------')
+
+    print('------------')
+    print('state')
+    print(state)
+    print('------------')
 
     aggregated_model = getattr(video_level_models,
                                FLAGS.video_level_classifier_model)
