@@ -153,24 +153,6 @@ class DbofModel(models.BaseModel):
     tf.summary.histogram("cluster_weights", cluster_weights)
     activation = tf.matmul(reshaped_input, cluster_weights)
 
-    print('----------')
-    print('reshaped_input')
-    print(type(reshaped_input))
-    print(reshaped_input)
-    print('----------')
-
-    print('----------')
-    print('cluster_weights')
-    print(type(cluster_weights))
-    print(cluster_weights)
-    print('----------')
-
-    print('----------')
-    print('activation')
-    print(type(activation))
-    print(activation)
-    print('----------')
-
     if add_batch_norm:
       activation = slim.batch_norm(
           activation,
@@ -188,7 +170,18 @@ class DbofModel(models.BaseModel):
     tf.summary.histogram("cluster_output", activation)
 
     activation = tf.reshape(activation, [-1, max_frames, cluster_size])
+
+    print('-----------')
+    print('activation')
+    print(activation)
+    print('-----------')
+
     activation = utils.FramePooling(activation, FLAGS.dbof_pooling_method)
+
+    print('-----------')
+    print('activation')
+    print(activation)
+    print('-----------')
 
     hidden1_weights = tf.get_variable("hidden1_weights",
       [cluster_size, hidden1_size],
