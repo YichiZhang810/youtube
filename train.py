@@ -84,7 +84,7 @@ if __name__ == "__main__":
   flags.DEFINE_integer("num_epochs", 5,
                        "How many passes to make over the dataset before "
                        "halting training.")
-  flags.DEFINE_integer("max_steps", None,
+  flags.DEFINE_integer("max_steps", 100000,
                        "The maximum number of iterations of the training loop.")
   flags.DEFINE_integer("export_model_steps", 1000,
                        "The period, in number of steps, with which the model "
