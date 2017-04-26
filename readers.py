@@ -151,6 +151,24 @@ class YT8MFrameFeatureReader(BaseReader):
       max_frames: the maximum number of frames to process.
     """
 
+    print('-------------')
+    print('num_classes')
+    print(num_classes)
+    print(self.num_classes)
+    print('-------------')
+    print('feature_sizes')
+    print(feature_sizes)
+    print(self.feature_sizes)
+    print('-------------')
+    print('feature_names')
+    print(feature_names)
+    print(self.feature_names)
+    print('-------------')
+    print('max_frames')
+    print(max_frames)
+    print(self.max_frames)
+    print('-------------')
+
     assert len(feature_names) == len(feature_sizes), \
     "length of feature_names (={}) != length of feature_sizes (={})".format( \
     len(feature_names), len(feature_sizes))
