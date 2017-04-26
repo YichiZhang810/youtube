@@ -222,7 +222,7 @@ class LstmModel(models.BaseModel):
 
     print('----------')
     print('num_frames')
-    print(num_frames)
+    print(num_frames.eval())
     print('----------')
 
     lstm_size = FLAGS.lstm_cells
