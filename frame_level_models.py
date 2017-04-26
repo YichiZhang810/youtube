@@ -70,50 +70,16 @@ class FrameLevelLogisticModel(models.BaseModel):
       'batch_size' x 'num_classes'.
     """
 
-    print('-----------')
-    print('num_frames')
-    print(type(num_frames))
-    print(num_frames)
-    print('-----------')
-
     num_frames = tf.cast(tf.expand_dims(num_frames, 1), tf.float32)
     feature_size = model_input.get_shape().as_list()[2]
-
-    print('-----------')
-    print('num_frames')
-    print(type(num_frames))
-    print(num_frames)
-    print('-----------')
-    print('-----------')
-    print('feature_size')
-    print(type(feature_size))
-    print(feature_size)
-    print('-----------')
 
 
     denominators = tf.reshape(
         tf.tile(num_frames, [1, feature_size]), [-1, feature_size])
 
-    print('-----------')
-    print('model_input')
-    print(type(model_input))
-    print(model_input)
-    print('-----------')
-
-
-    print('-----------')
-    print('tf.reduce_sum(model_input, axis=[1])')
-    print(type(tf.reduce_sum(model_input, axis=[1])))
-    print(tf.reduce_sum(model_input, axis=[1]))
-    print('-----------')
 
     avg_pooled = tf.reduce_sum(model_input, axis=[1]) / denominators
 
-    print('-----------')
-    print('avg_pooled')
-    print(type(avg_pooled))
-    print(avg_pooled)
-    print('-----------')
 
     output = slim.fully_connected(
         avg_pooled, vocab_size, activation_fn=tf.nn.sigmoid,
@@ -171,6 +137,13 @@ class DbofModel(models.BaseModel):
     feature_size = model_input.get_shape().as_list()[2]
     reshaped_input = tf.reshape(model_input, [-1, feature_size])
     tf.summary.histogram("input_hist", reshaped_input)
+
+    print('--------------')
+    print('model_input')
+    print(model_input)
+    print('reshaped_input')
+    print(reshaped_input)
+    print('--------------')
 
     if add_batch_norm:
       reshaped_input = slim.batch_norm(
