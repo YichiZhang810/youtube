@@ -333,7 +333,7 @@ def build_graph(reader,
   tf.add_to_collection("labels", tf.cast(labels_batch, tf.float32))
   tf.add_to_collection("train_op", train_op)
 
-  print('hhhhhhhhhhhhhh')
+  # print('hhhhhhhhhhhhhh')
 
 
 class Trainer(object):
