@@ -69,17 +69,13 @@ class FrameLevelLogisticModel(models.BaseModel):
       model in the 'predictions' key. The dimensions of the tensor are
       'batch_size' x 'num_classes'.
     """
-
     num_frames = tf.cast(tf.expand_dims(num_frames, 1), tf.float32)
     feature_size = model_input.get_shape().as_list()[2]
 
-
     denominators = tf.reshape(
         tf.tile(num_frames, [1, feature_size]), [-1, feature_size])
-
-
-    avg_pooled = tf.reduce_sum(model_input, axis=[1]) / denominators
-
+    avg_pooled = tf.reduce_sum(model_input,
+                               axis=[1]) / denominators
 
     output = slim.fully_connected(
         avg_pooled, vocab_size, activation_fn=tf.nn.sigmoid,
@@ -133,7 +129,6 @@ class DbofModel(models.BaseModel):
     else:
       model_input = utils.SampleRandomSequence(model_input, num_frames,
                                                iterations)
-
     max_frames = model_input.get_shape().as_list()[1]
     feature_size = model_input.get_shape().as_list()[2]
     reshaped_input = tf.reshape(model_input, [-1, feature_size])
@@ -152,7 +147,6 @@ class DbofModel(models.BaseModel):
       initializer = tf.random_normal_initializer(stddev=1 / math.sqrt(feature_size)))
     tf.summary.histogram("cluster_weights", cluster_weights)
     activation = tf.matmul(reshaped_input, cluster_weights)
-
     if add_batch_norm:
       activation = slim.batch_norm(
           activation,
@@ -195,8 +189,6 @@ class DbofModel(models.BaseModel):
 
     aggregated_model = getattr(video_level_models,
                                FLAGS.video_level_classifier_model)
-
-
     return aggregated_model().create_model(
         model_input=activation,
         vocab_size=vocab_size,
@@ -219,9 +211,8 @@ class LstmModel(models.BaseModel):
       model in the 'predictions' key. The dimensions of the tensor are
       'batch_size' x 'num_classes'.
     """
-
-    lstm_size = FLAGS.lstm_cells #1024
-    number_of_layers = FLAGS.lstm_layers #2
+    lstm_size = FLAGS.lstm_cells
+    number_of_layers = FLAGS.lstm_layers
 
     stacked_lstm = tf.contrib.rnn.MultiRNNCell(
             [
@@ -230,26 +221,11 @@ class LstmModel(models.BaseModel):
                 for _ in range(number_of_layers)
                 ])
 
-    print('------------')
-    print('stacked_lstm')
-    print(stacked_lstm)
-    print('------------')
-
     loss = 0.0
 
     outputs, state = tf.nn.dynamic_rnn(stacked_lstm, model_input,
                                        sequence_length=num_frames,
                                        dtype=tf.float32)
-
-    print('------------')
-    print('outputs')
-    print(outputs)
-    print('------------')
-
-    print('------------')
-    print('state')
-    print(state)
-    print('------------')
 
     aggregated_model = getattr(video_level_models,
                                FLAGS.video_level_classifier_model)
