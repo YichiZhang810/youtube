@@ -167,6 +167,12 @@ class MoeModel(models.BaseModel):
         biases_initializer=None,
         weights_regularizer=slim.l2_regularizer(l2_penalty),
         scope="gates")
+
+    print('------------')
+    print(type(gate_activations))
+    print(gate_activations)
+    print('------------')
+
     expert_activations = slim.fully_connected(
         model_input,
         vocab_size * num_mixtures,
