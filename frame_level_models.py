@@ -138,13 +138,6 @@ class DbofModel(models.BaseModel):
     reshaped_input = tf.reshape(model_input, [-1, feature_size])
     tf.summary.histogram("input_hist", reshaped_input)
 
-    print('--------------')
-    print('model_input')
-    print(model_input)
-    print('reshaped_input')
-    print(reshaped_input)
-    print('--------------')
-
     if add_batch_norm:
       reshaped_input = slim.batch_norm(
           reshaped_input,
@@ -200,6 +193,14 @@ class DbofModel(models.BaseModel):
 
     aggregated_model = getattr(video_level_models,
                                FLAGS.video_level_classifier_model)
+
+    print('----------------')
+    print('aggregated_model')
+    print(type(aggregated_model))
+    print(aggregated_model)
+
+    print('----------------')
+
     return aggregated_model().create_model(
         model_input=activation,
         vocab_size=vocab_size,
