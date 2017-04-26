@@ -180,6 +180,11 @@ class MoeModel(models.BaseModel):
         weights_regularizer=slim.l2_regularizer(l2_penalty),
         scope="experts")
 
+    print('------------')
+    print(type(expert_activations))
+    print(expert_activations)
+    print('------------')
+
     gating_distribution = tf.nn.softmax(tf.reshape(
         gate_activations,
         [-1, num_mixtures + 1]))  # (Batch * #Labels) x (num_mixtures + 1)
@@ -187,8 +192,20 @@ class MoeModel(models.BaseModel):
         expert_activations,
         [-1, num_mixtures]))  # (Batch * #Labels) x num_mixtures
 
+    print('------------')
+    print(type(gating_distribution))
+    print(gating_distribution)
+    print('------------')
+
+
     final_probabilities_by_class_and_batch = tf.reduce_sum(
         gating_distribution[:, :num_mixtures] * expert_distribution, 1)
+
+    print('------------')
+    print(type(final_probabilities_by_class_and_batch))
+    print(final_probabilities_by_class_and_batch)
+    print('------------')
+    
     final_probabilities = tf.reshape(final_probabilities_by_class_and_batch,
                                      [-1, vocab_size])
     return {"predictions": final_probabilities}
