@@ -168,7 +168,7 @@ class MoeModel(models.BaseModel):
         weights_regularizer=slim.l2_regularizer(l2_penalty),
         scope="gates")
 
-    print('------------')
+    print('------gate_activations------')
     print(type(gate_activations))
     print(gate_activations)
     print('------------')
@@ -180,7 +180,7 @@ class MoeModel(models.BaseModel):
         weights_regularizer=slim.l2_regularizer(l2_penalty),
         scope="experts")
 
-    print('------------')
+    print('------expert_activations------')
     print(type(expert_activations))
     print(expert_activations)
     print('------------')
@@ -192,16 +192,21 @@ class MoeModel(models.BaseModel):
         expert_activations,
         [-1, num_mixtures]))  # (Batch * #Labels) x num_mixtures
 
-    print('------------')
+    print('------gating_distribution------')
     print(type(gating_distribution))
     print(gating_distribution)
+    print('------------')
+
+    print('------expert_distribution------')
+    print(type(expert_distribution))
+    print(expert_distribution)
     print('------------')
 
 
     final_probabilities_by_class_and_batch = tf.reduce_sum(
         gating_distribution[:, :num_mixtures] * expert_distribution, 1)
 
-    print('------------')
+    print('------final_probabilities_by_class_and_batch------')
     print(type(final_probabilities_by_class_and_batch))
     print(final_probabilities_by_class_and_batch)
     print('------------')
@@ -209,7 +214,7 @@ class MoeModel(models.BaseModel):
     final_probabilities = tf.reshape(final_probabilities_by_class_and_batch,
                                      [-1, vocab_size])
 
-    print('------------')
+    print('-------final_probabilities-----')
     print(type(final_probabilities))
     print(final_probabilities)
     print('------------')
