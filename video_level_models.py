@@ -18,14 +18,9 @@ import math
 import models
 import tensorflow as tf
 import utils
-import pandas as pd
-import numpy as np
 
 from tensorflow import flags
 import tensorflow.contrib.slim as slim
-
-from sklearn.neural_network import MLPClassifier
-from sklearn.neural_network import MLPRegressor
 
 FLAGS = flags.FLAGS
 flags.DEFINE_integer(
@@ -49,87 +44,7 @@ class LogisticModel(models.BaseModel):
     output = slim.fully_connected(
         model_input, vocab_size, activation_fn=tf.nn.sigmoid,
         weights_regularizer=slim.l2_regularizer(l2_penalty))
-
-    print ("=====================")
-    # # print (type(output))
-    print(type(model_input))
-    # # sess1 = tf.InteractiveSession()
-    print(model_input)
-    # # sess = tf.InteractiveSession()
-
-    # sess = tf.Session()
-    # sess.run(model_input)
-
-    print ("=====================")
-
     return {"predictions": output}
-
-class RegressorModel(models.BaseModel):
-  """Logistic model with L2 regularization."""
-
-  def create_model(self, model_input, vocab_size, l2_penalty=1e-8, **unused_params):
-    """Creates a logistic model.
-
-    Args:
-      model_input: 'batch' x 'num_features' matrix of input features.
-      vocab_size: The number of classes in the dataset.
-
-    Returns:
-      A dictionary with a tensor containing the probability predictions of the
-      model in the 'predictions' key. The dimensions of the tensor are
-      batch_size x num_classes."""
-
-    vid_ids = []
-    labels = []
-    labels_for_MLP = []
-    mean_rgb = []
-    mean_audio = []
-
-    i=0
-    label_mapping = pd.Series.from_csv('label_names.csv',header=0).to_dict()
-    n = len(label_mapping)
-    # print ("=====================")
-    # print (model_input)
-    # print ("=====================")
-    for example in tf.python_io.tf_record_iterator("train-0.tfrecord"):
-      tf_example = tf.train.Example.FromString(example) # get visualized TFRecord
-      vid_ids.append(tf_example.features.feature['video_id'].bytes_list.value[0].decode(encoding='UTF-8'))
-
-      array = np.zeros(n)
-      tmp_labels=tf_example.features.feature['labels'].int64_list.value
-      tmp_labels_after_pp = []
-      for x in tmp_labels:
-        if x<4716:
-          tmp_labels_after_pp.append(x)
-      labels.append(tmp_labels_after_pp)
-      array[tmp_labels]=1
-      labels_for_MLP.append(array)
-
-      mean_rgb.append(tf_example.features.feature['mean_rgb'].float_list.value)
-      mean_audio.append(tf_example.features.feature['mean_audio'].float_list.value)
-
-    # output = slim.fully_connected(
-    # model_input, vocab_size, activation_fn=tf.nn.sigmoid,
-    # weights_regularizer=slim.l2_regularizer(l2_penalty))
-    X = mean_audio #[[0., 0.], [1., 1.]]
-    y = labels_for_MLP #[[0, 1, 1], [1, 1, 0], [1, 0, 0]]
-    clf = MLPRegressor(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(15,),random_state=1)
-    clf.fit(X, y)
-
-    audio_matrix = np.matrix(mean_audio)
-
-    result1 = clf.predict(audio_matrix)
-    result_tensor = tf.convert_to_tensor(result1)
-    # print ("=====================")
-    # print (type(result_tensor))
-    # print ("=====================")
-
-    # sess = tf.InteractiveSession()
-    # print(type(result_tensor.eval()))
-
-    # print ("=====================")
-
-    return {"predictions": result_tensor}
 
 class MoeModel(models.BaseModel):
   """A softmax over a mixture of logistic models (with L2 regularization)."""
@@ -167,7 +82,6 @@ class MoeModel(models.BaseModel):
         biases_initializer=None,
         weights_regularizer=slim.l2_regularizer(l2_penalty),
         scope="gates")
-
     expert_activations = slim.fully_connected(
         model_input,
         vocab_size * num_mixtures,
@@ -182,25 +96,8 @@ class MoeModel(models.BaseModel):
         expert_activations,
         [-1, num_mixtures]))  # (Batch * #Labels) x num_mixtures
 
-
     final_probabilities_by_class_and_batch = tf.reduce_sum(
         gating_distribution[:, :num_mixtures] * expert_distribution, 1)
-
-    print('------gating_distribution[:, :num_mixtures]------')
-    print(type(gating_distribution[:, :num_mixtures]))
-    print(gating_distribution[:, :num_mixtures])
-    print('------------')
-
-    print('------gating_distribution[:, :num_mixtures] * expert_distribution------')
-    print(type(gating_distribution[:, :num_mixtures] * expert_distribution))
-    print(gating_distribution[:, :num_mixtures] * expert_distribution)
-    print('------------')
-
     final_probabilities = tf.reshape(final_probabilities_by_class_and_batch,
                                      [-1, vocab_size])
-
-    print('-------final_probabilities-----')
-    print(type(final_probabilities))
-    print(final_probabilities)
-    print('------------')
     return {"predictions": final_probabilities}
