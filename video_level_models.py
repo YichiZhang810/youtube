@@ -168,10 +168,10 @@ class MoeModel(models.BaseModel):
         weights_regularizer=slim.l2_regularizer(l2_penalty),
         scope="gates")
 
-    # print('------------')
-    # print(type(gate_activations))
-    # print(gate_activations)
-    # print('------------')
+    print('------------')
+    print(type(gate_activations))
+    print(gate_activations)
+    print('------------')
 
     expert_activations = slim.fully_connected(
         model_input,
@@ -205,7 +205,12 @@ class MoeModel(models.BaseModel):
     print(type(final_probabilities_by_class_and_batch))
     print(final_probabilities_by_class_and_batch)
     print('------------')
-    
+
     final_probabilities = tf.reshape(final_probabilities_by_class_and_batch,
                                      [-1, vocab_size])
+
+    print('------------')
+    print(type(final_probabilities))
+    print(final_probabilities)
+    print('------------')
     return {"predictions": final_probabilities}
