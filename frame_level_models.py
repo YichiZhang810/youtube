@@ -126,11 +126,6 @@ class DbofModel(models.BaseModel):
     cluster_size = cluster_size or FLAGS.dbof_cluster_size
     hidden1_size = hidden_size or FLAGS.dbof_hidden_size
 
-    print('-----------')
-    print(model_input)
-
-    print('-----------')
-
     num_frames = tf.cast(tf.expand_dims(num_frames, 1), tf.float32)
     if random_frames:
       model_input = utils.SampleRandomFrames(model_input, num_frames,
@@ -139,10 +134,6 @@ class DbofModel(models.BaseModel):
       model_input = utils.SampleRandomSequence(model_input, num_frames,
                                                iterations)
 
-    print('-----------')
-    print(model_input)
-
-    print('-----------')
     max_frames = model_input.get_shape().as_list()[1]
     feature_size = model_input.get_shape().as_list()[2]
     reshaped_input = tf.reshape(model_input, [-1, feature_size])
@@ -161,6 +152,13 @@ class DbofModel(models.BaseModel):
       initializer = tf.random_normal_initializer(stddev=1 / math.sqrt(feature_size)))
     tf.summary.histogram("cluster_weights", cluster_weights)
     activation = tf.matmul(reshaped_input, cluster_weights)
+
+    print('----------')
+    print('activation')
+    print(type(activation))
+    print(activation)
+    print('----------')
+
     if add_batch_norm:
       activation = slim.batch_norm(
           activation,
