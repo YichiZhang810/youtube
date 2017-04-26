@@ -126,6 +126,11 @@ class DbofModel(models.BaseModel):
     cluster_size = cluster_size or FLAGS.dbof_cluster_size
     hidden1_size = hidden_size or FLAGS.dbof_hidden_size
 
+    print('-----------')
+    print(model_input)
+
+    print('-----------')
+
     num_frames = tf.cast(tf.expand_dims(num_frames, 1), tf.float32)
     if random_frames:
       model_input = utils.SampleRandomFrames(model_input, num_frames,
@@ -133,6 +138,11 @@ class DbofModel(models.BaseModel):
     else:
       model_input = utils.SampleRandomSequence(model_input, num_frames,
                                                iterations)
+
+    print('-----------')
+    print(model_input)
+
+    print('-----------')
     max_frames = model_input.get_shape().as_list()[1]
     feature_size = model_input.get_shape().as_list()[2]
     reshaped_input = tf.reshape(model_input, [-1, feature_size])
@@ -194,12 +204,6 @@ class DbofModel(models.BaseModel):
     aggregated_model = getattr(video_level_models,
                                FLAGS.video_level_classifier_model)
 
-    print('----------------')
-    print('aggregated_model')
-    print(type(aggregated_model))
-    print(aggregated_model)
-
-    print('----------------')
 
     return aggregated_model().create_model(
         model_input=activation,
