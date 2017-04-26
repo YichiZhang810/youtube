@@ -69,6 +69,15 @@ class FrameLevelLogisticModel(models.BaseModel):
       model in the 'predictions' key. The dimensions of the tensor are
       'batch_size' x 'num_classes'.
     """
+
+    print('---------------')
+    print('num_frames')
+    print(num_frames)
+    print('model_input')
+    print(model_input)
+    print('---------------')
+
+
     num_frames = tf.cast(tf.expand_dims(num_frames, 1), tf.float32)
     feature_size = model_input.get_shape().as_list()[2]
 
