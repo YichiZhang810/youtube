@@ -70,12 +70,12 @@ class FrameLevelLogisticModel(models.BaseModel):
       'batch_size' x 'num_classes'.
     """
 
-    print('---------------')
-    print('num_frames')
-    print(num_frames)
-    print('model_input')
-    print(model_input)
-    print('---------------')
+    # print('---------------')
+    # print('num_frames')
+    # print(num_frames)
+    # print('model_input')
+    # print(model_input)
+    # print('---------------')
 
 
     num_frames = tf.cast(tf.expand_dims(num_frames, 1), tf.float32)

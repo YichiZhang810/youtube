@@ -233,6 +233,11 @@ class YT8MFrameFeatureReader(BaseReader):
     num_features = len(self.feature_names)
     assert num_features > 0, "No feature selected: feature_names is empty!"
 
+    print('-------------')
+    print('num_features')
+    print(num_features)
+    print('-------------')
+
     assert len(self.feature_names) == len(self.feature_sizes), \
     "length of feature_names (={}) != length of feature_sizes (={})".format( \
     len(self.feature_names), len(self.feature_sizes))
