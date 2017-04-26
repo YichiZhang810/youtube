@@ -222,7 +222,8 @@ class LstmModel(models.BaseModel):
 
     print('----------')
     print('num_frames')
-    tf.Print(num_frames)
+    with tf.Session():
+      num_frames.eval()
     print('----------')
 
     lstm_size = FLAGS.lstm_cells
