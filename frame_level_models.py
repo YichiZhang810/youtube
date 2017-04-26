@@ -154,6 +154,18 @@ class DbofModel(models.BaseModel):
     activation = tf.matmul(reshaped_input, cluster_weights)
 
     print('----------')
+    print('reshaped_input')
+    print(type(reshaped_input))
+    print(reshaped_input)
+    print('----------')
+
+    print('----------')
+    print('cluster_weights')
+    print(type(cluster_weights))
+    print(cluster_weights)
+    print('----------')
+
+    print('----------')
     print('activation')
     print(type(activation))
     print(activation)
